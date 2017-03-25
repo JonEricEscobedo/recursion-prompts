@@ -34,11 +34,11 @@ var sum = function(array) {
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
 	var newArr = array.slice();
-  var result = [];
+  var flatArr = [];
 
   function flattenize(arr) {
     if (!Array.isArray(arr)) {
-      result.push(arr);
+      flatArr.push(arr);
     } else {
       for (var idx = 0; idx < arr.length; idx++) {
         flattenize(arr[idx]);
@@ -48,22 +48,48 @@ var arraySum = function(array) {
   flattenize(newArr);
 
   // Base case
-  if (result.length === 0) {
+  if (flatArr.length === 0) {
     return 0;
   }
 
   // Recursive case
-  return result[0] + arraySum(result.slice(1));
+  return flatArr[0] + arraySum(flatArr.slice(1));
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+	// A number N is even if N mod 2 === 0
+	// A number N is odd if N mod 2 === 1
+
+	// Base case
+	if (Math.abs(n) === 0) {
+		return true;
+	} else if (Math.abs(n) === 1) {
+		return false;
+	}
+
+	// Recursive case
+	return isEven(Math.abs(n)-2);
+
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+	var result = 0;  
+
+  // Base case
+  if (n === 0) {
+    return 0;
+  }
+
+  // Recursive case
+  if (n > 0) {
+    return n-1 + sumBelow(n-1);  
+  } else {
+    return n+1 + sumBelow(n+1);
+  }
 };
 
 // 6. Get the integers within a range (x, y).
